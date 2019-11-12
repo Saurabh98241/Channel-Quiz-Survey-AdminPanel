@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="59a1f12e23f540b9ab856bb6a70aea6d" Name="Diagram1" ZoomLevel="72">
+        <EntityTypeShape EntityType="Verve_AdminModel.tblBlog" Width="1.5" PointX="5.25" PointY="3.125" />
+        <EntityTypeShape EntityType="Verve_AdminModel.tblBlogComment" Width="1.5" PointX="7.5" PointY="3.75" />
+        <EntityTypeShape EntityType="Verve_AdminModel.tblBlogLike" Width="1.5" PointX="7.5" PointY="0.75" />
+        <EntityTypeShape EntityType="Verve_AdminModel.tblChannel" Width="1.5" PointX="0.75" PointY="3.5" />
+        <EntityTypeShape EntityType="Verve_AdminModel.tblTopic" Width="1.5" PointX="3" PointY="3.375" />
+        <EntityTypeShape EntityType="Verve_AdminModel.tblUser" Width="1.5" PointX="5.25" PointY="7.5" />
+        <AssociationConnector Association="Verve_AdminModel.FK_BlogId" />
+        <AssociationConnector Association="Verve_AdminModel.FK_BlogIdInComment" />
+        <AssociationConnector Association="Verve_AdminModel.FK_tblBlog_tblTopic" />
+        <AssociationConnector Association="Verve_AdminModel.FK_CommentByUserId" />
+        <AssociationConnector Association="Verve_AdminModel.FK_BlogLikedByUserId" />
+        <AssociationConnector Association="Verve_AdminModel.FK_ChannelINtblTopic" />
+        <EntityTypeShape EntityType="Verve_AdminModel.tblSurveyMatrix" Width="1.5" PointX="11.875" PointY="7.75" />
+        <EntityTypeShape EntityType="Verve_AdminModel.tblSurveyAnswerType" Width="1.5" PointX="7.375" PointY="12.875" />
+        <AssociationConnector Association="Verve_AdminModel.FK_tblSurveyMatrix_tblSurveyAnswerType" />
+        <EntityTypeShape EntityType="Verve_AdminModel.tblSurvey" Width="1.5" PointX="9.625" PointY="12" />
+        <AssociationConnector Association="Verve_AdminModel.FK_tblSurvey_tblSurveyAnswerType" />
+        <AssociationConnector Association="Verve_AdminModel.FK_tblSurveyMatrix_tblSurveyMatrix" />
+        <EntityTypeShape EntityType="Verve_AdminModel.tblQuiz" Width="1.5" PointX="0.75" PointY="7.75" />
+        <EntityTypeShape EntityType="Verve_AdminModel.tblQuestion" Width="1.5" PointX="3" PointY="7.5" />
+        <AssociationConnector Association="Verve_AdminModel.FK_tblQuestion_tblQuiz" />
+        <EntityTypeShape EntityType="Verve_AdminModel.tblQuestionOptionMapping" Width="1.5" PointX="7.375" PointY="6.75" />
+        <EntityTypeShape EntityType="Verve_AdminModel.tblUserQuestionAnswer" Width="1.5" PointX="10.5" PointY="4.125" />
+        <AssociationConnector Association="Verve_AdminModel.FK_tblUserQuestionAnswer_tblQuestion" />
+        <AssociationConnector Association="Verve_AdminModel.FK_tblUserQuestionAnswer_tblQuiz" />
+        <AssociationConnector Association="Verve_AdminModel.FK_tblUserQuestionAnswer_tblUser" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,1023 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Verve_AdminModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tblBlog">
+          <Key>
+            <PropertyRef Name="BlogId" />
+          </Key>
+          <Property Name="BlogId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TopicId" Type="bigint" Nullable="false" />
+          <Property Name="BlogName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="BlogHeading" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="CreatedBy" Type="bigint" />
+          <Property Name="CreatedDate" Type="date" />
+          <Property Name="UpdatedBy" Type="bigint" />
+          <Property Name="UpdatedDate" Type="date" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblBlogComment">
+          <Key>
+            <PropertyRef Name="BlogCommentId" />
+          </Key>
+          <Property Name="BlogCommentId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BlogId" Type="bigint" />
+          <Property Name="BlogCommentByUserId" Type="bigint" />
+          <Property Name="Comment" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="tblBlogLike">
+          <Key>
+            <PropertyRef Name="BlogLikeId" />
+          </Key>
+          <Property Name="BlogLikeId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BlogId" Type="bigint" />
+          <Property Name="BlogLikedByUserId" Type="bigint" />
+          <Property Name="Like" Type="bit" />
+        </EntityType>
+        <EntityType Name="tblChannel">
+          <Key>
+            <PropertyRef Name="ChannelId" />
+          </Key>
+          <Property Name="ChannelId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ChannelName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedBy" Type="bigint" />
+          <Property Name="CreatedDate" Type="date" />
+          <Property Name="UpdatedBy" Type="bigint" />
+          <Property Name="UpdatedDate" Type="date" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblQuestion">
+          <Key>
+            <PropertyRef Name="QuestionId" />
+          </Key>
+          <Property Name="QuestionId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="QuizId" Type="bigint" Nullable="false" />
+          <Property Name="Question" Type="varchar(max)" Nullable="false" />
+          <Property Name="IsMultiple" Type="bit" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="CreatedBy" Type="bigint" />
+          <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="UpdatedBy" Type="bigint" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblQuestionOptionMapping">
+          <Key>
+            <PropertyRef Name="OptionId" />
+          </Key>
+          <Property Name="OptionId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="QuestionId" Type="bigint" Nullable="false" />
+          <Property Name="QuestionOptionText" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="IsTrue" Type="bit" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="CreatedBy" Type="bigint" />
+          <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="UpdatedBy" Type="bigint" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblQuiz">
+          <Key>
+            <PropertyRef Name="QuizId" />
+          </Key>
+          <Property Name="QuizId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="QuizName" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="CreatedBy" Type="bigint" />
+          <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="UpdatedBy" Type="bigint" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblSurvey">
+          <Key>
+            <PropertyRef Name="SurveyId" />
+          </Key>
+          <Property Name="SurveyId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AnsTypeId" Type="int" Nullable="false" />
+          <Property Name="SurveyName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="SurveyDescription" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CompletionText" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="IsNeverExpire" Type="bit" Nullable="false" />
+          <Property Name="ExpiryDate" Type="date" />
+          <Property Name="CreatedBy" Type="bigint" />
+          <Property Name="CreatedDate" Type="date" />
+          <Property Name="UpdatedBy" Type="bigint" />
+          <Property Name="UpdatedDate" Type="date" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblSurveyAnswerType">
+          <Key>
+            <PropertyRef Name="AnsTypeId" />
+          </Key>
+          <Property Name="AnsTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AnswerType" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblSurveyMatrix">
+          <Key>
+            <PropertyRef Name="SurveyMatrixId" />
+          </Key>
+          <Property Name="SurveyMatrixId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SurveyId" Type="bigint" />
+          <Property Name="AnsTypeId" Type="int" />
+          <Property Name="OptionText" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="tblTopic">
+          <Key>
+            <PropertyRef Name="TopicId" />
+          </Key>
+          <Property Name="TopicId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ChannelId" Type="bigint" Nullable="false" />
+          <Property Name="TopicName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="CreatedBy" Type="bigint" />
+          <Property Name="CreatedDate" Type="date" />
+          <Property Name="UpdatedBy" Type="bigint" />
+          <Property Name="UpdatedDate" Type="date" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblUser">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ContactNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Address" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ProfilePic" Type="nvarchar" MaxLength="500" />
+          <Property Name="CreatedDate" Type="date" />
+          <Property Name="CreatedBy" Type="bigint" />
+          <Property Name="UpdatedDate" Type="date" />
+          <Property Name="UpdatedBy" Type="bigint" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblUserQuestionAnswer">
+          <Key>
+            <PropertyRef Name="UserAnsId" />
+          </Key>
+          <Property Name="UserAnsId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="bigint" Nullable="false" />
+          <Property Name="QuizId" Type="bigint" Nullable="false" />
+          <Property Name="QuestionId" Type="bigint" Nullable="false" />
+          <Property Name="SelectedAns" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="IsTrueAns" Type="bit" Nullable="false" />
+          <Property Name="AnswerDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_BlogId">
+          <End Role="tblBlog" Type="Self.tblBlog" Multiplicity="0..1" />
+          <End Role="tblBlogLike" Type="Self.tblBlogLike" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblBlog">
+              <PropertyRef Name="BlogId" />
+            </Principal>
+            <Dependent Role="tblBlogLike">
+              <PropertyRef Name="BlogId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BlogIdInComment">
+          <End Role="tblBlog" Type="Self.tblBlog" Multiplicity="0..1" />
+          <End Role="tblBlogComment" Type="Self.tblBlogComment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblBlog">
+              <PropertyRef Name="BlogId" />
+            </Principal>
+            <Dependent Role="tblBlogComment">
+              <PropertyRef Name="BlogId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BlogLikedByUserId">
+          <End Role="tblUser" Type="Self.tblUser" Multiplicity="0..1" />
+          <End Role="tblBlogLike" Type="Self.tblBlogLike" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblUser">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="tblBlogLike">
+              <PropertyRef Name="BlogLikedByUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ChannelINtblTopic">
+          <End Role="tblChannel" Type="Self.tblChannel" Multiplicity="1" />
+          <End Role="tblTopic" Type="Self.tblTopic" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblChannel">
+              <PropertyRef Name="ChannelId" />
+            </Principal>
+            <Dependent Role="tblTopic">
+              <PropertyRef Name="ChannelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CommentByUserId">
+          <End Role="tblUser" Type="Self.tblUser" Multiplicity="0..1" />
+          <End Role="tblBlogComment" Type="Self.tblBlogComment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblUser">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="tblBlogComment">
+              <PropertyRef Name="BlogCommentByUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblBlog_tblTopic">
+          <End Role="tblTopic" Type="Self.tblTopic" Multiplicity="1" />
+          <End Role="tblBlog" Type="Self.tblBlog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblTopic">
+              <PropertyRef Name="TopicId" />
+            </Principal>
+            <Dependent Role="tblBlog">
+              <PropertyRef Name="TopicId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblQuestion_tblQuiz">
+          <End Role="tblQuiz" Type="Self.tblQuiz" Multiplicity="1" />
+          <End Role="tblQuestion" Type="Self.tblQuestion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblQuiz">
+              <PropertyRef Name="QuizId" />
+            </Principal>
+            <Dependent Role="tblQuestion">
+              <PropertyRef Name="QuizId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblSurvey_tblSurveyAnswerType">
+          <End Role="tblSurveyAnswerType" Type="Self.tblSurveyAnswerType" Multiplicity="1" />
+          <End Role="tblSurvey" Type="Self.tblSurvey" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblSurveyAnswerType">
+              <PropertyRef Name="AnsTypeId" />
+            </Principal>
+            <Dependent Role="tblSurvey">
+              <PropertyRef Name="AnsTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblSurveyMatrix_tblSurveyAnswerType">
+          <End Role="tblSurveyAnswerType" Type="Self.tblSurveyAnswerType" Multiplicity="0..1" />
+          <End Role="tblSurveyMatrix" Type="Self.tblSurveyMatrix" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblSurveyAnswerType">
+              <PropertyRef Name="AnsTypeId" />
+            </Principal>
+            <Dependent Role="tblSurveyMatrix">
+              <PropertyRef Name="AnsTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblSurveyMatrix_tblSurveyMatrix">
+          <End Role="tblSurvey" Type="Self.tblSurvey" Multiplicity="0..1" />
+          <End Role="tblSurveyMatrix" Type="Self.tblSurveyMatrix" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblSurvey">
+              <PropertyRef Name="SurveyId" />
+            </Principal>
+            <Dependent Role="tblSurveyMatrix">
+              <PropertyRef Name="SurveyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblUserQuestionAnswer_tblQuestion">
+          <End Role="tblQuestion" Type="Self.tblQuestion" Multiplicity="1" />
+          <End Role="tblUserQuestionAnswer" Type="Self.tblUserQuestionAnswer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblQuestion">
+              <PropertyRef Name="QuestionId" />
+            </Principal>
+            <Dependent Role="tblUserQuestionAnswer">
+              <PropertyRef Name="QuestionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblUserQuestionAnswer_tblQuiz">
+          <End Role="tblQuiz" Type="Self.tblQuiz" Multiplicity="1" />
+          <End Role="tblUserQuestionAnswer" Type="Self.tblUserQuestionAnswer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblQuiz">
+              <PropertyRef Name="QuizId" />
+            </Principal>
+            <Dependent Role="tblUserQuestionAnswer">
+              <PropertyRef Name="QuizId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblUserQuestionAnswer_tblUser">
+          <End Role="tblUser" Type="Self.tblUser" Multiplicity="1" />
+          <End Role="tblUserQuestionAnswer" Type="Self.tblUserQuestionAnswer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblUser">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="tblUserQuestionAnswer">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="GetCommentByMultipleBlog" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="strComment" Type="varchar(max)" Mode="In" />
+        </Function>
+        <Function Name="GetLikeByMultipleBlog" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="strLike" Type="varchar(max)" Mode="In" />
+        </Function>
+        <EntityContainer Name="Verve_AdminModelStoreContainer">
+          <EntitySet Name="tblBlog" EntityType="Self.tblBlog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblBlogComment" EntityType="Self.tblBlogComment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblBlogLike" EntityType="Self.tblBlogLike" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblChannel" EntityType="Self.tblChannel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblQuestion" EntityType="Self.tblQuestion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblQuestionOptionMapping" EntityType="Self.tblQuestionOptionMapping" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblQuiz" EntityType="Self.tblQuiz" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblSurvey" EntityType="Self.tblSurvey" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblSurveyAnswerType" EntityType="Self.tblSurveyAnswerType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblSurveyMatrix" EntityType="Self.tblSurveyMatrix" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblTopic" EntityType="Self.tblTopic" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblUser" EntityType="Self.tblUser" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblUserQuestionAnswer" EntityType="Self.tblUserQuestionAnswer" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_BlogId" Association="Self.FK_BlogId">
+            <End Role="tblBlog" EntitySet="tblBlog" />
+            <End Role="tblBlogLike" EntitySet="tblBlogLike" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BlogIdInComment" Association="Self.FK_BlogIdInComment">
+            <End Role="tblBlog" EntitySet="tblBlog" />
+            <End Role="tblBlogComment" EntitySet="tblBlogComment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BlogLikedByUserId" Association="Self.FK_BlogLikedByUserId">
+            <End Role="tblUser" EntitySet="tblUser" />
+            <End Role="tblBlogLike" EntitySet="tblBlogLike" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ChannelINtblTopic" Association="Self.FK_ChannelINtblTopic">
+            <End Role="tblChannel" EntitySet="tblChannel" />
+            <End Role="tblTopic" EntitySet="tblTopic" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CommentByUserId" Association="Self.FK_CommentByUserId">
+            <End Role="tblUser" EntitySet="tblUser" />
+            <End Role="tblBlogComment" EntitySet="tblBlogComment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblBlog_tblTopic" Association="Self.FK_tblBlog_tblTopic">
+            <End Role="tblTopic" EntitySet="tblTopic" />
+            <End Role="tblBlog" EntitySet="tblBlog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblQuestion_tblQuiz" Association="Self.FK_tblQuestion_tblQuiz">
+            <End Role="tblQuiz" EntitySet="tblQuiz" />
+            <End Role="tblQuestion" EntitySet="tblQuestion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblSurvey_tblSurveyAnswerType" Association="Self.FK_tblSurvey_tblSurveyAnswerType">
+            <End Role="tblSurveyAnswerType" EntitySet="tblSurveyAnswerType" />
+            <End Role="tblSurvey" EntitySet="tblSurvey" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblSurveyMatrix_tblSurveyAnswerType" Association="Self.FK_tblSurveyMatrix_tblSurveyAnswerType">
+            <End Role="tblSurveyAnswerType" EntitySet="tblSurveyAnswerType" />
+            <End Role="tblSurveyMatrix" EntitySet="tblSurveyMatrix" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblSurveyMatrix_tblSurveyMatrix" Association="Self.FK_tblSurveyMatrix_tblSurveyMatrix">
+            <End Role="tblSurvey" EntitySet="tblSurvey" />
+            <End Role="tblSurveyMatrix" EntitySet="tblSurveyMatrix" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblUserQuestionAnswer_tblQuestion" Association="Self.FK_tblUserQuestionAnswer_tblQuestion">
+            <End Role="tblQuestion" EntitySet="tblQuestion" />
+            <End Role="tblUserQuestionAnswer" EntitySet="tblUserQuestionAnswer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblUserQuestionAnswer_tblQuiz" Association="Self.FK_tblUserQuestionAnswer_tblQuiz">
+            <End Role="tblQuiz" EntitySet="tblQuiz" />
+            <End Role="tblUserQuestionAnswer" EntitySet="tblUserQuestionAnswer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblUserQuestionAnswer_tblUser" Association="Self.FK_tblUserQuestionAnswer_tblUser">
+            <End Role="tblUser" EntitySet="tblUser" />
+            <End Role="tblUserQuestionAnswer" EntitySet="tblUserQuestionAnswer" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Verve_AdminModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="Verve_AdminEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tblBlogs" EntityType="Verve_AdminModel.tblBlog" />
+          <EntitySet Name="tblBlogComments" EntityType="Verve_AdminModel.tblBlogComment" />
+          <EntitySet Name="tblBlogLikes" EntityType="Verve_AdminModel.tblBlogLike" />
+          <EntitySet Name="tblChannels" EntityType="Verve_AdminModel.tblChannel" />
+          <EntitySet Name="tblTopics" EntityType="Verve_AdminModel.tblTopic" />
+          <EntitySet Name="tblUsers" EntityType="Verve_AdminModel.tblUser" />
+          <AssociationSet Name="FK_BlogId" Association="Verve_AdminModel.FK_BlogId">
+            <End Role="tblBlog" EntitySet="tblBlogs" />
+            <End Role="tblBlogLike" EntitySet="tblBlogLikes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BlogIdInComment" Association="Verve_AdminModel.FK_BlogIdInComment">
+            <End Role="tblBlog" EntitySet="tblBlogs" />
+            <End Role="tblBlogComment" EntitySet="tblBlogComments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblBlog_tblTopic" Association="Verve_AdminModel.FK_tblBlog_tblTopic">
+            <End Role="tblTopic" EntitySet="tblTopics" />
+            <End Role="tblBlog" EntitySet="tblBlogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CommentByUserId" Association="Verve_AdminModel.FK_CommentByUserId">
+            <End Role="tblUser" EntitySet="tblUsers" />
+            <End Role="tblBlogComment" EntitySet="tblBlogComments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BlogLikedByUserId" Association="Verve_AdminModel.FK_BlogLikedByUserId">
+            <End Role="tblUser" EntitySet="tblUsers" />
+            <End Role="tblBlogLike" EntitySet="tblBlogLikes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ChannelINtblTopic" Association="Verve_AdminModel.FK_ChannelINtblTopic">
+            <End Role="tblChannel" EntitySet="tblChannels" />
+            <End Role="tblTopic" EntitySet="tblTopics" />
+          </AssociationSet>
+          <FunctionImport Name="GetCommentByMultipleBlog">
+          <Parameter Name="strComment" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetLikeByMultipleBlog">
+          <Parameter Name="strLike" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="tblSurveyMatrices" EntityType="Verve_AdminModel.tblSurveyMatrix" />
+          <EntitySet Name="tblSurveyAnswerTypes" EntityType="Verve_AdminModel.tblSurveyAnswerType" />
+          <AssociationSet Name="FK_tblSurveyMatrix_tblSurveyAnswerType" Association="Verve_AdminModel.FK_tblSurveyMatrix_tblSurveyAnswerType">
+            <End Role="tblSurveyAnswerType" EntitySet="tblSurveyAnswerTypes" />
+            <End Role="tblSurveyMatrix" EntitySet="tblSurveyMatrices" />
+          </AssociationSet>
+          <EntitySet Name="tblSurveys" EntityType="Verve_AdminModel.tblSurvey" />
+          <AssociationSet Name="FK_tblSurvey_tblSurveyAnswerType" Association="Verve_AdminModel.FK_tblSurvey_tblSurveyAnswerType">
+            <End Role="tblSurveyAnswerType" EntitySet="tblSurveyAnswerTypes" />
+            <End Role="tblSurvey" EntitySet="tblSurveys" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblSurveyMatrix_tblSurveyMatrix" Association="Verve_AdminModel.FK_tblSurveyMatrix_tblSurveyMatrix">
+            <End Role="tblSurvey" EntitySet="tblSurveys" />
+            <End Role="tblSurveyMatrix" EntitySet="tblSurveyMatrices" />
+          </AssociationSet>
+          <EntitySet Name="tblQuizs" EntityType="Verve_AdminModel.tblQuiz" />
+          <EntitySet Name="tblQuestions" EntityType="Verve_AdminModel.tblQuestion" />
+          <AssociationSet Name="FK_tblQuestion_tblQuiz" Association="Verve_AdminModel.FK_tblQuestion_tblQuiz">
+            <End Role="tblQuiz" EntitySet="tblQuizs" />
+            <End Role="tblQuestion" EntitySet="tblQuestions" />
+          </AssociationSet>
+          <EntitySet Name="tblQuestionOptionMappings" EntityType="Verve_AdminModel.tblQuestionOptionMapping" />
+          <EntitySet Name="tblUserQuestionAnswers" EntityType="Verve_AdminModel.tblUserQuestionAnswer" />
+          <AssociationSet Name="FK_tblUserQuestionAnswer_tblQuestion" Association="Verve_AdminModel.FK_tblUserQuestionAnswer_tblQuestion">
+            <End Role="tblQuestion" EntitySet="tblQuestions" />
+            <End Role="tblUserQuestionAnswer" EntitySet="tblUserQuestionAnswers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblUserQuestionAnswer_tblQuiz" Association="Verve_AdminModel.FK_tblUserQuestionAnswer_tblQuiz">
+            <End Role="tblQuiz" EntitySet="tblQuizs" />
+            <End Role="tblUserQuestionAnswer" EntitySet="tblUserQuestionAnswers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblUserQuestionAnswer_tblUser" Association="Verve_AdminModel.FK_tblUserQuestionAnswer_tblUser">
+            <End Role="tblUser" EntitySet="tblUsers" />
+            <End Role="tblUserQuestionAnswer" EntitySet="tblUserQuestionAnswers" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="tblBlog">
+          <Key>
+            <PropertyRef Name="BlogId" />
+          </Key>
+          <Property Name="BlogId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TopicId" Type="Int64" Nullable="false" />
+          <Property Name="BlogName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="BlogHeading" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="Int64" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="0" />
+          <Property Name="UpdatedBy" Type="Int64" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="0" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="tblBlogLikes" Relationship="Verve_AdminModel.FK_BlogId" FromRole="tblBlog" ToRole="tblBlogLike" />
+          <NavigationProperty Name="tblBlogComments" Relationship="Verve_AdminModel.FK_BlogIdInComment" FromRole="tblBlog" ToRole="tblBlogComment" />
+          <NavigationProperty Name="tblTopic" Relationship="Verve_AdminModel.FK_tblBlog_tblTopic" FromRole="tblBlog" ToRole="tblTopic" />
+        </EntityType>
+        <EntityType Name="tblBlogComment">
+          <Key>
+            <PropertyRef Name="BlogCommentId" />
+          </Key>
+          <Property Name="BlogCommentId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BlogId" Type="Int64" />
+          <Property Name="BlogCommentByUserId" Type="Int64" />
+          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblBlog" Relationship="Verve_AdminModel.FK_BlogIdInComment" FromRole="tblBlogComment" ToRole="tblBlog" />
+          <NavigationProperty Name="tblUser" Relationship="Verve_AdminModel.FK_CommentByUserId" FromRole="tblBlogComment" ToRole="tblUser" />
+        </EntityType>
+        <EntityType Name="tblBlogLike">
+          <Key>
+            <PropertyRef Name="BlogLikeId" />
+          </Key>
+          <Property Name="BlogLikeId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BlogId" Type="Int64" />
+          <Property Name="BlogLikedByUserId" Type="Int64" />
+          <Property Name="Like" Type="Boolean" />
+          <NavigationProperty Name="tblBlog" Relationship="Verve_AdminModel.FK_BlogId" FromRole="tblBlogLike" ToRole="tblBlog" />
+          <NavigationProperty Name="tblUser" Relationship="Verve_AdminModel.FK_BlogLikedByUserId" FromRole="tblBlogLike" ToRole="tblUser" />
+        </EntityType>
+        <EntityType Name="tblChannel">
+          <Key>
+            <PropertyRef Name="ChannelId" />
+          </Key>
+          <Property Name="ChannelId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ChannelName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="Int64" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="0" />
+          <Property Name="UpdatedBy" Type="Int64" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="0" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="tblTopics" Relationship="Verve_AdminModel.FK_ChannelINtblTopic" FromRole="tblChannel" ToRole="tblTopic" />
+        </EntityType>
+        <EntityType Name="tblTopic">
+          <Key>
+            <PropertyRef Name="TopicId" />
+          </Key>
+          <Property Name="TopicId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ChannelId" Type="Int64" Nullable="false" />
+          <Property Name="TopicName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="Int64" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="0" />
+          <Property Name="UpdatedBy" Type="Int64" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="0" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="tblBlogs" Relationship="Verve_AdminModel.FK_tblBlog_tblTopic" FromRole="tblTopic" ToRole="tblBlog" />
+          <NavigationProperty Name="tblChannel" Relationship="Verve_AdminModel.FK_ChannelINtblTopic" FromRole="tblTopic" ToRole="tblChannel" />
+        </EntityType>
+        <EntityType Name="tblUser">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ContactNumber" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ProfilePic" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="0" />
+          <Property Name="CreatedBy" Type="Int64" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="0" />
+          <Property Name="UpdatedBy" Type="Int64" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="tblBlogComments" Relationship="Verve_AdminModel.FK_CommentByUserId" FromRole="tblUser" ToRole="tblBlogComment" />
+          <NavigationProperty Name="tblBlogLikes" Relationship="Verve_AdminModel.FK_BlogLikedByUserId" FromRole="tblUser" ToRole="tblBlogLike" />
+          <NavigationProperty Name="tblUserQuestionAnswers" Relationship="Verve_AdminModel.FK_tblUserQuestionAnswer_tblUser" FromRole="tblUser" ToRole="tblUserQuestionAnswer" />
+        </EntityType>
+        <Association Name="FK_BlogId">
+          <End Type="Verve_AdminModel.tblBlog" Role="tblBlog" Multiplicity="0..1" />
+          <End Type="Verve_AdminModel.tblBlogLike" Role="tblBlogLike" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblBlog">
+              <PropertyRef Name="BlogId" />
+            </Principal>
+            <Dependent Role="tblBlogLike">
+              <PropertyRef Name="BlogId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BlogIdInComment">
+          <End Type="Verve_AdminModel.tblBlog" Role="tblBlog" Multiplicity="0..1" />
+          <End Type="Verve_AdminModel.tblBlogComment" Role="tblBlogComment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblBlog">
+              <PropertyRef Name="BlogId" />
+            </Principal>
+            <Dependent Role="tblBlogComment">
+              <PropertyRef Name="BlogId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblBlog_tblTopic">
+          <End Type="Verve_AdminModel.tblTopic" Role="tblTopic" Multiplicity="1" />
+          <End Type="Verve_AdminModel.tblBlog" Role="tblBlog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblTopic">
+              <PropertyRef Name="TopicId" />
+            </Principal>
+            <Dependent Role="tblBlog">
+              <PropertyRef Name="TopicId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CommentByUserId">
+          <End Type="Verve_AdminModel.tblUser" Role="tblUser" Multiplicity="0..1" />
+          <End Type="Verve_AdminModel.tblBlogComment" Role="tblBlogComment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblUser">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="tblBlogComment">
+              <PropertyRef Name="BlogCommentByUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BlogLikedByUserId">
+          <End Type="Verve_AdminModel.tblUser" Role="tblUser" Multiplicity="0..1" />
+          <End Type="Verve_AdminModel.tblBlogLike" Role="tblBlogLike" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblUser">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="tblBlogLike">
+              <PropertyRef Name="BlogLikedByUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ChannelINtblTopic">
+          <End Type="Verve_AdminModel.tblChannel" Role="tblChannel" Multiplicity="1" />
+          <End Type="Verve_AdminModel.tblTopic" Role="tblTopic" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblChannel">
+              <PropertyRef Name="ChannelId" />
+            </Principal>
+            <Dependent Role="tblTopic">
+              <PropertyRef Name="ChannelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="tblSurveyMatrix">
+          <Key>
+            <PropertyRef Name="SurveyMatrixId" />
+          </Key>
+          <Property Name="SurveyMatrixId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SurveyId" Type="Int64" />
+          <Property Name="AnsTypeId" Type="Int32" />
+          <Property Name="OptionText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblSurveyAnswerType" Relationship="Verve_AdminModel.FK_tblSurveyMatrix_tblSurveyAnswerType" FromRole="tblSurveyMatrix" ToRole="tblSurveyAnswerType" />
+          <NavigationProperty Name="tblSurvey" Relationship="Verve_AdminModel.FK_tblSurveyMatrix_tblSurveyMatrix" FromRole="tblSurveyMatrix" ToRole="tblSurvey" />
+        </EntityType>
+        <EntityType Name="tblSurveyAnswerType">
+          <Key>
+            <PropertyRef Name="AnsTypeId" />
+          </Key>
+          <Property Name="AnsTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AnswerType" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="tblSurveyMatrices" Relationship="Verve_AdminModel.FK_tblSurveyMatrix_tblSurveyAnswerType" FromRole="tblSurveyAnswerType" ToRole="tblSurveyMatrix" />
+          <NavigationProperty Name="tblSurveys" Relationship="Verve_AdminModel.FK_tblSurvey_tblSurveyAnswerType" FromRole="tblSurveyAnswerType" ToRole="tblSurvey" />
+        </EntityType>
+        <Association Name="FK_tblSurveyMatrix_tblSurveyAnswerType">
+          <End Type="Verve_AdminModel.tblSurveyAnswerType" Role="tblSurveyAnswerType" Multiplicity="0..1" />
+          <End Type="Verve_AdminModel.tblSurveyMatrix" Role="tblSurveyMatrix" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblSurveyAnswerType">
+              <PropertyRef Name="AnsTypeId" />
+            </Principal>
+            <Dependent Role="tblSurveyMatrix">
+              <PropertyRef Name="AnsTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="tblSurvey">
+          <Key>
+            <PropertyRef Name="SurveyId" />
+          </Key>
+          <Property Name="SurveyId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AnsTypeId" Type="Int32" Nullable="false" />
+          <Property Name="SurveyName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SurveyDescription" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CompletionText" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsNeverExpire" Type="Boolean" Nullable="false" />
+          <Property Name="ExpiryDate" Type="DateTime" Precision="0" />
+          <Property Name="CreatedBy" Type="Int64" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="0" />
+          <Property Name="UpdatedBy" Type="Int64" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="0" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="tblSurveyAnswerType" Relationship="Verve_AdminModel.FK_tblSurvey_tblSurveyAnswerType" FromRole="tblSurvey" ToRole="tblSurveyAnswerType" />
+          <NavigationProperty Name="tblSurveyMatrices" Relationship="Verve_AdminModel.FK_tblSurveyMatrix_tblSurveyMatrix" FromRole="tblSurvey" ToRole="tblSurveyMatrix" />
+        </EntityType>
+        <Association Name="FK_tblSurvey_tblSurveyAnswerType">
+          <End Type="Verve_AdminModel.tblSurveyAnswerType" Role="tblSurveyAnswerType" Multiplicity="1" />
+          <End Type="Verve_AdminModel.tblSurvey" Role="tblSurvey" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblSurveyAnswerType">
+              <PropertyRef Name="AnsTypeId" />
+            </Principal>
+            <Dependent Role="tblSurvey">
+              <PropertyRef Name="AnsTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblSurveyMatrix_tblSurveyMatrix">
+          <End Type="Verve_AdminModel.tblSurvey" Role="tblSurvey" Multiplicity="0..1" />
+          <End Type="Verve_AdminModel.tblSurveyMatrix" Role="tblSurveyMatrix" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblSurvey">
+              <PropertyRef Name="SurveyId" />
+            </Principal>
+            <Dependent Role="tblSurveyMatrix">
+              <PropertyRef Name="SurveyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="tblQuiz">
+          <Key>
+            <PropertyRef Name="QuizId" />
+          </Key>
+          <Property Name="QuizId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="QuizName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="Int64" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="Int64" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="tblQuestions" Relationship="Verve_AdminModel.FK_tblQuestion_tblQuiz" FromRole="tblQuiz" ToRole="tblQuestion" />
+          <NavigationProperty Name="tblUserQuestionAnswers" Relationship="Verve_AdminModel.FK_tblUserQuestionAnswer_tblQuiz" FromRole="tblQuiz" ToRole="tblUserQuestionAnswer" />
+        </EntityType>
+        <EntityType Name="tblQuestion">
+          <Key>
+            <PropertyRef Name="QuestionId" />
+          </Key>
+          <Property Name="QuestionId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="QuizId" Type="Int64" Nullable="false" />
+          <Property Name="Question" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IsMultiple" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="Int64" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="Int64" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="tblQuiz" Relationship="Verve_AdminModel.FK_tblQuestion_tblQuiz" FromRole="tblQuestion" ToRole="tblQuiz" />
+          <NavigationProperty Name="tblUserQuestionAnswers" Relationship="Verve_AdminModel.FK_tblUserQuestionAnswer_tblQuestion" FromRole="tblQuestion" ToRole="tblUserQuestionAnswer" />
+        </EntityType>
+        <Association Name="FK_tblQuestion_tblQuiz">
+          <End Type="Verve_AdminModel.tblQuiz" Role="tblQuiz" Multiplicity="1" />
+          <End Type="Verve_AdminModel.tblQuestion" Role="tblQuestion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblQuiz">
+              <PropertyRef Name="QuizId" />
+            </Principal>
+            <Dependent Role="tblQuestion">
+              <PropertyRef Name="QuizId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="tblQuestionOptionMapping">
+          <Key>
+            <PropertyRef Name="OptionId" />
+          </Key>
+          <Property Name="OptionId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="QuestionId" Type="Int64" Nullable="false" />
+          <Property Name="QuestionOptionText" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsTrue" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="Int64" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="Int64" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblUserQuestionAnswer">
+          <Key>
+            <PropertyRef Name="UserAnsId" />
+          </Key>
+          <Property Name="UserAnsId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int64" Nullable="false" />
+          <Property Name="QuizId" Type="Int64" Nullable="false" />
+          <Property Name="QuestionId" Type="Int64" Nullable="false" />
+          <Property Name="SelectedAns" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsTrueAns" Type="Boolean" Nullable="false" />
+          <Property Name="AnswerDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="tblQuestion" Relationship="Verve_AdminModel.FK_tblUserQuestionAnswer_tblQuestion" FromRole="tblUserQuestionAnswer" ToRole="tblQuestion" />
+          <NavigationProperty Name="tblQuiz" Relationship="Verve_AdminModel.FK_tblUserQuestionAnswer_tblQuiz" FromRole="tblUserQuestionAnswer" ToRole="tblQuiz" />
+          <NavigationProperty Name="tblUser" Relationship="Verve_AdminModel.FK_tblUserQuestionAnswer_tblUser" FromRole="tblUserQuestionAnswer" ToRole="tblUser" />
+        </EntityType>
+        <Association Name="FK_tblUserQuestionAnswer_tblQuestion">
+          <End Type="Verve_AdminModel.tblQuestion" Role="tblQuestion" Multiplicity="1" />
+          <End Type="Verve_AdminModel.tblUserQuestionAnswer" Role="tblUserQuestionAnswer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblQuestion">
+              <PropertyRef Name="QuestionId" />
+            </Principal>
+            <Dependent Role="tblUserQuestionAnswer">
+              <PropertyRef Name="QuestionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblUserQuestionAnswer_tblQuiz">
+          <End Type="Verve_AdminModel.tblQuiz" Role="tblQuiz" Multiplicity="1" />
+          <End Type="Verve_AdminModel.tblUserQuestionAnswer" Role="tblUserQuestionAnswer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblQuiz">
+              <PropertyRef Name="QuizId" />
+            </Principal>
+            <Dependent Role="tblUserQuestionAnswer">
+              <PropertyRef Name="QuizId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblUserQuestionAnswer_tblUser">
+          <End Type="Verve_AdminModel.tblUser" Role="tblUser" Multiplicity="1" />
+          <End Type="Verve_AdminModel.tblUserQuestionAnswer" Role="tblUserQuestionAnswer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblUser">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="tblUserQuestionAnswer">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Verve_AdminModelStoreContainer" CdmEntityContainer="Verve_AdminEntities">
+          <EntitySetMapping Name="tblBlogs">
+            <EntityTypeMapping TypeName="Verve_AdminModel.tblBlog">
+              <MappingFragment StoreEntitySet="tblBlog">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="BlogHeading" ColumnName="BlogHeading" />
+                <ScalarProperty Name="BlogName" ColumnName="BlogName" />
+                <ScalarProperty Name="TopicId" ColumnName="TopicId" />
+                <ScalarProperty Name="BlogId" ColumnName="BlogId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblBlogComments">
+            <EntityTypeMapping TypeName="Verve_AdminModel.tblBlogComment">
+              <MappingFragment StoreEntitySet="tblBlogComment">
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="BlogCommentByUserId" ColumnName="BlogCommentByUserId" />
+                <ScalarProperty Name="BlogId" ColumnName="BlogId" />
+                <ScalarProperty Name="BlogCommentId" ColumnName="BlogCommentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblBlogLikes">
+            <EntityTypeMapping TypeName="Verve_AdminModel.tblBlogLike">
+              <MappingFragment StoreEntitySet="tblBlogLike">
+                <ScalarProperty Name="Like" ColumnName="Like" />
+                <ScalarProperty Name="BlogLikedByUserId" ColumnName="BlogLikedByUserId" />
+                <ScalarProperty Name="BlogId" ColumnName="BlogId" />
+                <ScalarProperty Name="BlogLikeId" ColumnName="BlogLikeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblChannels">
+            <EntityTypeMapping TypeName="Verve_AdminModel.tblChannel">
+              <MappingFragment StoreEntitySet="tblChannel">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ChannelName" ColumnName="ChannelName" />
+                <ScalarProperty Name="ChannelId" ColumnName="ChannelId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblTopics">
+            <EntityTypeMapping TypeName="Verve_AdminModel.tblTopic">
+              <MappingFragment StoreEntitySet="tblTopic">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="TopicName" ColumnName="TopicName" />
+                <ScalarProperty Name="ChannelId" ColumnName="ChannelId" />
+                <ScalarProperty Name="TopicId" ColumnName="TopicId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblUsers">
+            <EntityTypeMapping TypeName="Verve_AdminModel.tblUser">
+              <MappingFragment StoreEntitySet="tblUser">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ProfilePic" ColumnName="ProfilePic" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetCommentByMultipleBlog" FunctionName="Verve_AdminModel.Store.GetCommentByMultipleBlog" />
+          <FunctionImportMapping FunctionImportName="GetLikeByMultipleBlog" FunctionName="Verve_AdminModel.Store.GetLikeByMultipleBlog" />
+          <EntitySetMapping Name="tblSurveyMatrices">
+            <EntityTypeMapping TypeName="Verve_AdminModel.tblSurveyMatrix">
+              <MappingFragment StoreEntitySet="tblSurveyMatrix">
+                <ScalarProperty Name="OptionText" ColumnName="OptionText" />
+                <ScalarProperty Name="AnsTypeId" ColumnName="AnsTypeId" />
+                <ScalarProperty Name="SurveyId" ColumnName="SurveyId" />
+                <ScalarProperty Name="SurveyMatrixId" ColumnName="SurveyMatrixId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblSurveyAnswerTypes">
+            <EntityTypeMapping TypeName="Verve_AdminModel.tblSurveyAnswerType">
+              <MappingFragment StoreEntitySet="tblSurveyAnswerType">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="AnswerType" ColumnName="AnswerType" />
+                <ScalarProperty Name="AnsTypeId" ColumnName="AnsTypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblSurveys">
+            <EntityTypeMapping TypeName="Verve_AdminModel.tblSurvey">
+              <MappingFragment StoreEntitySet="tblSurvey">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
+                <ScalarProperty Name="IsNeverExpire" ColumnName="IsNeverExpire" />
+                <ScalarProperty Name="CompletionText" ColumnName="CompletionText" />
+                <ScalarProperty Name="SurveyDescription" ColumnName="SurveyDescription" />
+                <ScalarProperty Name="SurveyName" ColumnName="SurveyName" />
+                <ScalarProperty Name="AnsTypeId" ColumnName="AnsTypeId" />
+                <ScalarProperty Name="SurveyId" ColumnName="SurveyId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblQuizs">
+            <EntityTypeMapping TypeName="Verve_AdminModel.tblQuiz">
+              <MappingFragment StoreEntitySet="tblQuiz">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="QuizName" ColumnName="QuizName" />
+                <ScalarProperty Name="QuizId" ColumnName="QuizId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblQuestions">
+            <EntityTypeMapping TypeName="Verve_AdminModel.tblQuestion">
+              <MappingFragment StoreEntitySet="tblQuestion">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="IsMultiple" ColumnName="IsMultiple" />
+                <ScalarProperty Name="Question" ColumnName="Question" />
+                <ScalarProperty Name="QuizId" ColumnName="QuizId" />
+                <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblQuestionOptionMappings">
+            <EntityTypeMapping TypeName="Verve_AdminModel.tblQuestionOptionMapping">
+              <MappingFragment StoreEntitySet="tblQuestionOptionMapping">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="IsTrue" ColumnName="IsTrue" />
+                <ScalarProperty Name="QuestionOptionText" ColumnName="QuestionOptionText" />
+                <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
+                <ScalarProperty Name="OptionId" ColumnName="OptionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblUserQuestionAnswers">
+            <EntityTypeMapping TypeName="Verve_AdminModel.tblUserQuestionAnswer">
+              <MappingFragment StoreEntitySet="tblUserQuestionAnswer">
+                <ScalarProperty Name="AnswerDate" ColumnName="AnswerDate" />
+                <ScalarProperty Name="IsTrueAns" ColumnName="IsTrueAns" />
+                <ScalarProperty Name="SelectedAns" ColumnName="SelectedAns" />
+                <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
+                <ScalarProperty Name="QuizId" ColumnName="QuizId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="UserAnsId" ColumnName="UserAnsId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

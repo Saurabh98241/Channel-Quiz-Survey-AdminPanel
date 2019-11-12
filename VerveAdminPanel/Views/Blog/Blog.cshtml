@@ -1,0 +1,78 @@
+﻿@model IEnumerable<BusinessLogic.EntityClass.BlogEntity>
+
+@{
+    ViewBag.Title = "Blog";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<p>
+    @Html.ActionLink("Create New", "CreateBlog", "Blog", new { @class = "btn btn-primary" })
+</p>
+
+<div class="box">
+    <div class="box-header">
+        <h3 class="box-title">Blog List</h3>
+    </div>
+    <div class="box-body table-responsive">
+
+        <table id="example2" class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TopicName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.BlogName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.BlogHeading)
+                    </th>
+
+
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TopicName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BlogName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BlogHeading)
+                        </td>
+
+
+                        <td>
+                            @Html.ActionLink("Edit", "EditBlog", new { id = item.BlogId }) |
+
+                            @Html.ActionLink("Delete", "DeleteBlog", new { id = item.BlogId })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+</table>
+
+    </div>
+</div>
+@Scripts.Render("~/bundles/jquery")
+
+<script type="text/javascript">
+    $(function () {
+
+        $('#example2').dataTable({
+            "bPaginate": true,
+            "bLengthChange": false,
+            "bFilter": false,
+            "bSort": true,
+            "bInfo": true,
+            "bAutoWidth": false
+        });
+    });
+</script>

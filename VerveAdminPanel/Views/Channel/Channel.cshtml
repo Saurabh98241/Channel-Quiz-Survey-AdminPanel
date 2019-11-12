@@ -1,0 +1,91 @@
+﻿@model IEnumerable<BusinessLogic.EntityClass.ChannelEntity>
+
+@{
+    ViewBag.Title = "Channel";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<p>
+    @Html.ActionLink("Create New", "CreateChannel","Channel", new { @class="btn btn-primary"})
+</p>
+
+<div class="box">
+    <div class="box-header">
+        <h3 class="box-title">Channel List</h3>
+    </div>
+    <div class="box-body table-responsive">
+        <table id="example2" class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ChannelName)
+                    </th>
+                    @*<th>
+                    @Html.DisplayNameFor(model => model.CreatedBy)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CreatedDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.UpdatedBy)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.UpdatedDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IsActive)
+                </th>*@
+                    <th>Action</th>
+                </tr>
+            </thead>
+           
+                <tbody>
+            @foreach (var item in Model)
+                        {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ChannelName)
+                        </td>
+                        @*<td>
+                                @Html.DisplayFor(modelItem => item.CreatedBy)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CreatedDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.UpdatedBy)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.UpdatedDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.IsActive)
+                            </td>*@
+                        <td>
+                            @Html.ActionLink("Edit", "EditChannel", new { id=item.ChannelId }) |
+                           
+                            @Html.ActionLink("Delete", "DeleteChannel", new { id=item.ChannelId })
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+        </table>
+        </div>
+    </div>
+        @Scripts.Render("~/bundles/jquery")
+
+        <script type="text/javascript">
+            $(function () {
+
+                $('#example2').dataTable({
+                    "bPaginate": true,
+                    "bLengthChange": false,
+                    "bFilter": false,
+                    "bSort": true,
+                    "bInfo": true,
+                    "bAutoWidth": false
+                });
+            });
+        </script>

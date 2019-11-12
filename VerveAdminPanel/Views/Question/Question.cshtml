@@ -1,0 +1,185 @@
+﻿@model IEnumerable<BusinessLogic.EntityClass.QuestionEntity>
+
+<p>
+    @Html.ActionLink("Create New", "AddQuestion", "Question", null, new { @class = "btn btn-primary" })
+</p>
+<table id="example2" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.QuizName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Question)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsMultiple)
+            </th>
+            <th>
+                Add Option
+            </th>
+
+
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.QuizName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Question)
+                </td>
+                <td>
+                    @if (item.IsMultiple == true)
+                    {
+                        <label>True</label>
+                    }
+                    else
+                    {
+                        <label>False</label>
+                    }
+                </td>
+                <td>
+                    <button type="button" value="@item.QuestionId" id="btnAddOptionPopUp" style="background-color: cadetblue !important;" class="ForGetOptionId btn btn-circle" title="Add Option" data-toggle="modal" data-target="#myModal"></button>
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "EditQuestion", new { id = item.QuestionId }) |
+
+                    @Html.ActionLink("Delete", "DeleteQuestion", new { id = item.QuestionId })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Modal Header</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    <label>Option</label>
+                                </div>
+                                <div class="col-md-9">
+                                    <input type="text" id="optn" placeholder="Enter Option" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    <label>Is True Answer</label>
+                                </div>
+                                <div class="col-md-9">
+                                    <input type="checkbox" name="answer" id="chkAnswer" class="checkbox" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btnAddOption" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+@Scripts.Render("~/bundles/jquery")
+
+<script type="text/javascript">
+ $(function () {
+
+     var Global = {
+         QuestionId: null
+     }
+     $(".ForGetOptionId").click(function () {
+         debugger;
+         Global.QuestionId = $(this).val();
+     });
+
+
+     $('#example2').dataTable({
+         "bPaginate": true,
+         "bLengthChange": false,
+         "bFilter": false,
+         "bSort": true,
+         "bInfo": true,
+         "bAutoWidth": false
+     });
+
+     $("#btnAddOption").click(function () {
+         debugger;
+         var QuestionOptionMapping = new Object();
+         QuestionOptionMapping.QuestionId = Global.QuestionId;
+         QuestionOptionMapping.QuestionOptionText = $('#optn').val();
+         //QuestionOptionMapping.IsTrue = $('#chkAnswer').val();
+
+         if ($("#chkAnswer").prop('checked') == true) {
+             //do something
+             QuestionOptionMapping.IsTrue = true;
+         }
+         else {
+             QuestionOptionMapping.IsTrue = false;
+         }
+         if (QuestionOptionMapping.QuestionOptionText == '' || QuestionOptionMapping.QuestionOptionText==null) {
+             alert('Please Enter Option');
+         }
+         else
+         {
+             if (QuestionOptionMapping != null) {
+                 $.ajax({
+                     type: "POST",
+                     url: "@Url.Action("AddOption", "Question")",
+                     data: JSON.stringify(QuestionOptionMapping),
+                 contentType: "application/json; charset=utf-8",
+                 dataType: "json",
+                 success: function (response) {
+                     if (response != null) {
+                         debugger;
+                         if (response == "Option Already Exist.") {
+                             alert(response);
+                         }
+                         else
+                         {
+                             alert(response);
+                             $('#optn').val('');
+                             $('#chkAnswer').iCheck('uncheck');
+                         }
+                         
+                     } else {
+                         alert("Something went wrong");
+                     }
+                 },
+                 failure: function (response) {
+                     alert(response.responseText);
+                 },
+                 error: function (response) {
+                     alert(response.responseText);
+                 }
+             });
+         }
+         }
+     });
+ });
+</script>
+
+
+
+
+

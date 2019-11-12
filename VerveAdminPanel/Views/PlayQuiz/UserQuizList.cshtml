@@ -1,0 +1,36 @@
+﻿@model IEnumerable<BusinessLogic.EntityClass.QuizEntity>
+
+@{
+    ViewBag.Title = "UserQuizList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Lets play quiz</h2>
+
+<div class="row">
+    @if (ViewBag.QuizList != null)
+    {
+        foreach (BusinessLogic.EntityClass.QuizEntity quizList in ViewBag.QuizList)
+        {
+
+            <div class="col-lg-3 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-aqua">
+                    <div class="inner">
+                        <h4>
+                            @quizList.QuizName
+                        </h4>
+
+                    </div>
+
+                    <div class="small-box-footer">
+                        @*Play <i class="fa fa-arrow-circle-right"></i>*@
+                        @Html.ActionLink("Play","GetQuiz" ,new { QuizId = @quizList.QuizId, @class= "fa fa-arrow-circle-right BackForQuiz"}) 
+                        @*@Html.ActionLink("Play", "GetQuiz", "PlayQuiz", new { id = quizList.QuizId, @class = "fa fa-arrow-circle-right BackForQuiz" })*@
+                    </div>
+                </div>
+            </div><!-- ./col -->
+        }
+    }
+</div>
+

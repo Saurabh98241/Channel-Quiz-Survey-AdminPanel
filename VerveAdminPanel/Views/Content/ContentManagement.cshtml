@@ -1,0 +1,161 @@
+﻿@model BusinessLogic.EntityClass.ContentEntity
+
+@{
+    ViewBag.Title = "ContentManagement";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-primary">
+            <div class="box-header">
+                <h3 class="box-title">Content Management</h3>
+            </div>
+            <div class="form-horizontal Padding10">
+                <div class="form-group ">
+                    <label class="col-sm-2 control-label">Channel</label>
+
+                    <div class="col-sm-10">
+
+                        @Html.DropDownListFor(model => model.Channel.ChannelId, ViewBag.Channel as SelectList, "Select Channel", new { @class = "form-control", id = "Channel" })
+                        @*<label id="lblOrg" style="display:none">Please Select Organozation</label>*@
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Topic</label>
+
+                    <div class="col-sm-10">
+                        @Html.DropDownListFor(x => x.Topic.TopicId, new List<SelectListItem>(), "Select Topic",
+                                                              new { @class = "form-control", id = "topic" })
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- START ACCORDION & CAROUSEL-->
+
+<div class="row" >
+    <div class="col-md-12">
+        <div class="box box-solid">
+            <div class="box-header">
+                <h3 class="box-title">Blog</h3>
+            </div><!-- /.box-header -->
+            <div class="box-body">
+                <div class="box-group" id="accordion">
+                   
+                    @if (ViewBag.Blogs != null)
+                    {
+                        foreach (BusinessLogic.EntityClass.BlogEntity blogs in ViewBag.Blogs)
+                        {
+                            int LikeCount = 0;
+                            foreach (BusinessLogic.EntityClass.LikeEntity Likes in ViewBag.Likes)
+                            {
+                                if (blogs.BlogId == Likes.BlogId)
+                                {
+                                    if (Likes.Like == true)
+                                    {
+                                        LikeCount++;
+                                    }
+                                }
+                            }
+                            <div class="panel box box-primary">
+                                <div class="box-header">
+                                    <h4 class="box-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#/1">
+                                           
+                                            @blogs.BlogName 
+                                        </a>
+                                    </h4>
+                                    <i class="fa fa-fw fa-thumbs-up"> </i> &nbsp; <span class="label label-success">@LikeCount</span>
+                                    
+                                </div>
+                                <div id="1" class="panel-collapse collapse in">
+                                    <div class="box-body">
+                                        @*@blogs.BlogHeading*@
+
+                                        @if (ViewBag.Comments != null)
+                                        {
+                                            foreach (BusinessLogic.EntityClass.CommentEntity Comment in ViewBag.Comments)
+                                            {
+                                                if (blogs.BlogId == Comment.BlogId)
+                                                {
+                                                    <div class="alert alert-danger ">
+                                                        @Comment.Comment
+                                                    </div>
+                                              
+                                                }
+
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            //i = i + 1;
+                        }
+                    }
+                </div>
+            </div><!-- /.box-body -->
+        </div><!-- /.box -->
+    </div><!-- /.col -->
+
+</div><!-- /.row -->
+<!-- END ACCORDION & CAROUSEL-->
+
+
+
+@Scripts.Render("~/bundles/jquery")
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("#topic").change(function () {
+            LoadBlogs($(this).val());
+        });
+        function LoadBlogs(id) {
+            debugger;
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("GetBlog", "Content")', // we are calling json method
+                data: { 'id': id },
+                dataType: 'html',
+                cache: false,
+                success: function (data) {
+                    debugger;
+                    $("#accordion").html(data);
+                },
+                error: function (ex) {
+                    console.log(ex);
+                }
+            });
+        }
+
+
+        // Dropdown Selectedchange event
+        $("#Channel").change(function () {
+            $("#topic").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetTopics")', // Calling json method
+                dataType: 'json',
+                data: { id: $("#Channel").val() },
+                success: function (topics) {
+                    $("#topic").append('<option value="">Select topic</option>');
+                    $.each(topics, function (i, topic) {
+                        $("#topic").append('<option value="' + topic.Value + '">' +
+                             topic.Text + '</option>');
+                    });
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve topic.' + ex);
+                }
+            });
+            return false;
+        })
+    });
+</script>

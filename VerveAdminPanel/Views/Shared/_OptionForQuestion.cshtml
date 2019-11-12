@@ -1,0 +1,59 @@
+﻿@model BusinessLogic.EntityClass.QuestionEntity
+
+@using (Html.BeginForm("Create", "Contact", FormMethod.Post, new { enctype = "multipart/form-data", id = "addDoc" }))
+{
+    <div class="col-md-12">
+        <div class="form-group">
+            @Html.LabelFor(model => model.QuestionOptionMapping.QuestionOptionText, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Question, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Question, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Question, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Question, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Question, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+}
+
+@*<script>
+    $.ajax({
+        url: '@Url.Action("AddOption","Question")', // try to use Url Helper when possible
+        type: 'POST', // use Get for [HttpGet] action or POST for [HttpPost]
+        //contentType: 'application/json', not needed
+        //dataType: 'jsonp', jsonp is for sending to a site other than the current one..
+        data: QuestionOptionMapping, // no need to stringify
+        success: function (result) {
+            if (result == true) {
+                window.location = "/Dashboard";
+            } else {
+                $QuickLoginErrors.text(result);
+            }
+        }
+    });
+
+    $.ajax({
+        type: "POST",
+        url: '@Url.Action("AddOption","Question")',
+        data: JSON.stringify(QuestionOptionMapping),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (response) {
+            if (response != null) {
+                alert("Question Added successfully");
+            } else {
+                alert("Something went wrong");
+            }
+        },
+        failure: function (response) {
+            alert(response.responseText);
+        },
+        error: function (response) {
+            alert(response.responseText);
+        }
+    });
+</script>*@

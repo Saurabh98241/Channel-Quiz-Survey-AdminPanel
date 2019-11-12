@@ -1,0 +1,99 @@
+﻿@model BusinessLogic.EntityClass.UserQuizEntity
+@{
+    ViewBag.Title = "GetQuiz";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{ 
+    int Q = 400;
+    int QT = 100;
+    int OID = 300;
+    long OptionId = 1000; 
+    int count = 0;
+}
+
+<h2>Quiz</h2>
+<div class="box box-success">
+    <div class="row">
+        <div class="col-md-12">
+            @if (ViewBag.QuizName != null)
+            {
+                <div class="callout callout-info">
+                    <h4>Quiz Name : @ViewBag.QuizName.</h4>
+                    @*<p>Follow the steps to continue to payment.</p>*@
+                </div>
+            }
+
+        </div>
+
+        <div class="col-md-12" style="margin-left: 15px;padding-right: 50px;">
+            @*@using(Html.BeginForm("SaveQuiz", "PlayQuiz", FormMethod.Post, new { enctype = "multipart/form-data" })){*@
+            @if (Model != null)
+            {
+                
+
+                foreach (var Question in Model.QuestionEntity)
+                {
+                    <div class="callout callout-danger">
+                        <h4 id="@QT">
+                            @Question.Question
+                        </h4>
+                       <label class="hide" id="@Q">@Question.QuestionId</label>
+                        @foreach (var Option in Model.QuestionOptionMappingEntity)
+                        {
+                            if (Question.QuestionId == Option.QuestionId)
+                            {
+                                <p>
+                                    <input type="radio" class="radio" id="@OID" name="@Question.QuestionId" value="@Option.QuestionOptionText" />
+                                    @Option.QuestionOptionText
+                                </p>
+                            }
+                        }
+                    </div>
+
+                    count = count + 1;
+                    QT++;
+                    Q++;
+                }
+                <input type="submit" id="SubmitQuiz" value="save" name="submit" class="btn btn-primary" />
+            }
+            @*}*@
+
+        </div>
+    </div>
+</div>
+@Scripts.Render("~/bundles/jquery")
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#SubmitQuiz').on('click', function () {
+            var sel = @count;
+            console.log(sel);
+            var resultQuiz = [], countQuestion = parseInt(sel), question = {}, j = 1;
+            var questionId = @Q;
+            var questionText = @QT;
+            for (var i = 1; i <= countQuestion; i++) {
+                question = {
+                    QuestionId: $('#'+ (questionId - i)).text(),
+                    Question: $('#'+ (questionText - i)).text().trim(),
+                    QuestionOptionText: $('#'+ (questionText - i)).parent("div").find("input[type='radio']:checked").val()
+                }
+                resultQuiz.push(question);
+            }
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("SaveQuiz", "PlayQuiz")',
+                data: { resultQuiz },
+                success: function (response) {
+                    alert(response);
+                },
+                error: function (response) {
+                    alert(response);
+                }
+            });
+        });
+    });
+</script>
+
+
+
+

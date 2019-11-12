@@ -1,0 +1,89 @@
+﻿@model BusinessLogic.EntityClass.UserQuestionAnswerEntity
+@{
+    ViewBag.Title = "QuizResult";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>QuizResult</h2>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-primary">
+            <div class="box-header">
+                <h3 class="box-title">Content Management</h3>
+            </div>
+            <div class="form-horizontal Padding10">
+                <div class="form-group ">
+                    <label class="col-sm-2 control-label">Channel</label>
+
+                    <div class="col-sm-10">
+
+                        @Html.DropDownListFor(model => model.UserId, ViewBag.User as SelectList, "Select USer", new { @class = "form-control", id = "UserResult" })
+                       
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Topic</label>
+
+                    <div class="col-sm-10">
+                        @Html.DropDownListFor(x => x.QuizId, new List<SelectListItem>(), "Select Topic",
+                                                              new { @class = "form-control", id = "UserQuiz" })
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Scripts.Render("~/bundles/jquery")
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        @*$("#topic").change(function () {
+            LoadBlogs($(this).val());
+        });
+        function LoadBlogs(id) {
+            debugger;
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("GetBlog", "Content")', // we are calling json method
+                data: { 'id': id },
+                dataType: 'html',
+                cache: false,
+                success: function (data) {
+                    debugger;
+                    $("#accordion").html(data);
+                },
+                error: function (ex) {
+                    console.log(ex);
+                }
+            });
+        }*@
+
+
+        // Dropdown Selectedchange event
+        $("#UserResult").change(function () {
+            $("#UserQuiz").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetTopics")', // Calling json method
+                dataType: 'json',
+                data: { id: $("#Channel").val() },
+                success: function (topics) {
+                    $("#topic").append('<option value="">Select topic</option>');
+                    $.each(topics, function (i, topic) {
+                        $("#topic").append('<option value="' + topic.Value + '">' +
+                             topic.Text + '</option>');
+                    });
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve topic.' + ex);
+                }
+            });
+            return false;
+        })
+    });
+</script>
